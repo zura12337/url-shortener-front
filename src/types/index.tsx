@@ -8,6 +8,11 @@ export interface UrlType {
   date: string;
 }
 
+export interface UrlMetadataType {
+  title: string;
+  image: string;
+}
+
 export interface UserType {
   ip: string;
   visitedLinks: [string];
