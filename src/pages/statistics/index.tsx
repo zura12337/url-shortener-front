@@ -9,10 +9,13 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
+  PieChart,
+  Pie,
 } from "recharts";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
 import Loading from "../../components/Loading";
+import Chart from "../../components/Chart";
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
@@ -33,28 +36,6 @@ export default function StatisticsPage({ match }: { match: any }) {
       setUrlMetadata(response.data.metadata);
     }
     isLoading(false);
-  };
-
-  const processData = (data: any[]) => {
-    const processedData: any[] = [];
-
-    data.forEach((visitor: any) => {
-      if (processedData.length === 0) {
-        processedData.push({ date: visitor.date, count: 1 });
-      } else {
-        if (processedData.find((v) => v.date === visitor.date)) {
-          processedData.find((v: any, i: number) => {
-            if (v.date === visitor.date) {
-              processedData[i]["count"]++;
-            }
-          });
-        } else {
-          processedData.push({ date: visitor.date, count: 1 });
-        }
-      }
-    });
-
-    return processedData;
   };
 
   return (
@@ -119,71 +100,29 @@ export default function StatisticsPage({ match }: { match: any }) {
               {urlData.date}
             </Box>
           </Box>
-          <Grid gridTemplateColumns="1fr 1fr" gridGap={10}>
-            <Box
-              bg="white"
-              borderRadius="20px"
-              boxShadow="5px 0 10px rgba(0,0,0,.3)"
-              mt="50px"
-              py={5}
-              pr={10}
-            >
-              <Text mb={5} ml={10} color="gray.700">
-                Clicks: <strong>{urlData.visitors.length}</strong>
-              </Text>
-              <LineChart
-                width={570}
-                height={300}
-                data={processData(urlData.visitors)}
-              >
-                <Line
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#325a84"
-                  strokeWidth="3px"
-                />
-                <CartesianGrid strokeDasharray="10 10" />
-                <XAxis dataKey="date" padding={{ left: 10 }} />
-                <YAxis
-                  dataKey="count"
-                  allowDecimals={false}
-                  padding={{ bottom: 10 }}
-                />
-                <Tooltip />
-              </LineChart>
-            </Box>
-            <Box
-              bg="white"
-              borderRadius="20px"
-              boxShadow="5px 0 10px rgba(0,0,0,.3)"
-              mt="50px"
-              py={5}
-              pr={10}
-            >
-              <Text mb={5} ml={10} color="gray.700">
-                Unique users: <strong>{urlData.uniqueVisitors.length}</strong>
-              </Text>
-              <LineChart
-                width={570}
-                height={300}
-                data={processData(urlData.uniqueVisitors)}
-              >
-                <Line
-                  type="monotone"
-                  dataKey="count"
-                  stroke="#325a84"
-                  strokeWidth="3px"
-                />
-                <CartesianGrid strokeDasharray="10 10" />
-                <XAxis dataKey="date" padding={{ left: 10 }} />
-                <YAxis
-                  dataKey="count"
-                  allowDecimals={false}
-                  padding={{ bottom: 10 }}
-                />
-                <Tooltip />
-              </LineChart>
-            </Box>
+          <Grid w="100%" gridTemplateColumns="1fr 1fr" gridGap={10}>
+            <Chart
+              label={`Clicks: ${urlData.visitors.length}`}
+              data={urlData.visitors}
+              objKey="visitors"
+            />
+            <Chart
+              label={`Unique users: ${urlData.uniqueVisitors.length}`}
+              data={urlData.uniqueVisitors}
+              objKey="uniqueVisitors"
+            />
+            <Chart
+              label="Browsers"
+              type="bar"
+              data={urlData.uniqueVisitors}
+              objKey="browser"
+            />
+            <Chart
+              label="Devices"
+              type="bar"
+              data={urlData.uniqueVisitors}
+              objKey="os"
+            />
           </Grid>
         </>
       )}
