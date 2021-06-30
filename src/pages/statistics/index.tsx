@@ -1,15 +1,16 @@
-import { Box, Text, Flex } from "@chakra-ui/react";
+import { Link, Box, Text, Flex, Grid, Divider } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUrlData } from "../../api";
 import { UrlType } from "../../types";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
 import PrimaryButton from "../../components/PrimaryButton";
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
   const [urlData, setUrlData] = useState<UrlType>();
+  const [urlMetadata, setUrlMetadata] = useState();
   const history = useHistory();
 
   useEffect(() => {
@@ -19,8 +20,8 @@ export default function StatisticsPage({ match }: { match: any }) {
   const fetchUrl = async () => {
     const response = await getUrlData(id);
     if (response.status === 200) {
-      setUrlData(response.data);
-      processData(response.data.visitors);
+      setUrlData(response.data.url);
+      setUrlMetadata(response.data.metadata);
     }
   };
 
@@ -47,15 +48,22 @@ export default function StatisticsPage({ match }: { match: any }) {
   }
 
   return (
-    <Box mx="10%">
+    <Box pt="5%" px="10%">
       <SecondaryButton label="Go Back" onClick={() => history.push("/")} position="absolute" top="10px" left="10px" bg="white" px={10} py={5} _focus={{}} _hover={{}}/>
-      {urlData && (
+      {urlData && urlMetadata && (
         <>
-          <Text textAlign="center" pt="50px" fontSize={20} fontWeight="bold" color="white" m="auto">Displaying statistics for url<br /><a target="_blank" href={urlData.shortUrl}>{urlData.shortUrl}</a></Text> 
-          <Flex gridGap={10}>
-            <Box bg="white" borderRadius="20px" boxShadow="5px 0 10px rgba(0,0,0,.3)" w="max-content" mt="100px" py={5} pr={10}>
-              <Text mb={5} ml={10} color="gray.700">Clicks | last 30 days: <strong>{urlData.visitors.length}</strong></Text>
-              <LineChart width={550} height={300} data={processData(urlData.visitors)}>
+          <Text color="white" fontSize={30}>Link Analytics</Text>
+          <Box bg="white" px={5} py={4} h="max-content" w="100%" boxShadow="5px 0 10px rgba(0,0,0,.3)" borderRadius="5px" position="relative">
+            <Text mb={2}>{urlMetadata.title}</Text>
+            <Text color="gray.500">{urlData.originalUrl}</Text>
+            <Divider my={3}/>
+            <Link color="blue.600" href={urlData.shortUrl}>{urlData.shortUrl}</Link>
+            <Box position="absolute" borderWidth="1px" borderColor="gray.500" color="gray.500" px={2} py={1} top="10px" right="10px" borderRadius={5} fontSize={14}>{urlData.date}</Box>
+          </Box>
+          <Grid gridTemplateColumns="1fr 1fr" gridGap={10}>
+            <Box bg="white" borderRadius="20px" boxShadow="5px 0 10px rgba(0,0,0,.3)" mt="50px" py={5} pr={10}>
+              <Text mb={5} ml={10} color="gray.700">Clicks: <strong>{urlData.visitors.length}</strong></Text>
+              <LineChart width={570} height={300} data={processData(urlData.visitors)}>
                 <Line type="monotone" dataKey="count" stroke="#325a84" strokeWidth="3px"/>
                 <CartesianGrid strokeDasharray="10 10" />
                 <XAxis dataKey="date"  padding={{ left: 10 }}/>
@@ -63,9 +71,9 @@ export default function StatisticsPage({ match }: { match: any }) {
                 <Tooltip />
                </LineChart>
             </Box>
-            <Box bg="white" borderRadius="20px" boxShadow="5px 0 10px rgba(0,0,0,.3)" w="max-content" mt="100px" py={5} pr={10}>
-              <Text mb={5} ml={10} color="gray.700">Unique users | last 30 days: <strong>{urlData.uniqueVisitors.length}</strong></Text>
-              <LineChart width={550} height={300} data={processData(urlData.uniqueVisitors)}>
+            <Box bg="white" borderRadius="20px" boxShadow="5px 0 10px rgba(0,0,0,.3)" mt="50px" py={5} pr={10}>
+              <Text mb={5} ml={10} color="gray.700">Unique users: <strong>{urlData.uniqueVisitors.length}</strong></Text>
+              <LineChart width={570} height={300} data={processData(urlData.uniqueVisitors)}>
                 <Line type="monotone" dataKey="count" stroke="#325a84" strokeWidth="3px"/>
                 <CartesianGrid strokeDasharray="10 10" />
                 <XAxis dataKey="date"  padding={{ left: 10 }}/>
@@ -73,7 +81,7 @@ export default function StatisticsPage({ match }: { match: any }) {
                 <Tooltip />
                </LineChart>
             </Box>
-          </Flex>
+          </Grid>
         </>
       )}
     </Box>);

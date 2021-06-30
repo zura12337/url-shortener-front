@@ -15,7 +15,7 @@ const theme = extendTheme({
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box h="100vh" w="100%" bg="#364d66">
+    <Box minH="100vh" w="100%" bg="#364d66">
       <Switch>
         <Route path="/statistics/:id" component={StatisticsPage} />
         <Route path="/" component={HomePage} />
