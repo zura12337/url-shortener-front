@@ -4,9 +4,11 @@ import React from "react";
 export default function SecondaryButton({
   label,
   onClick,
+  ...rest
 }: {
   label: string;
   onClick: Function;
+  [x: string]: any;
 }) {
   return (
     <Button
@@ -16,6 +18,7 @@ export default function SecondaryButton({
       _hover={{ bg: "#364D66", color: "white" }}
       _active={{}}
       onClick={() => onClick()}
+      {...rest}
     >
       {label}
     </Button>
