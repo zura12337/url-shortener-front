@@ -10,3 +10,12 @@ export async function shortenUrl(url: string) {
     return ex.response;
   }
 }
+
+export async function getMyUrls() {
+  try {
+    const response = await axios.get(`${apiUrl}/urls/me`);
+    return response;
+  } catch (ex: any) {
+    return ex.response;
+  }
+}
