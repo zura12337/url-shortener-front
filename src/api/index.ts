@@ -19,3 +19,12 @@ export async function getMyUrls() {
     return ex.response;
   }
 }
+
+export async function getUrlData(id: string) {
+  try {
+    const response = await axios.get(`${apiUrl}/statistics/${id}`);
+    return response;
+  } catch (ex: any) {
+    return ex.response;
+  }
+}
