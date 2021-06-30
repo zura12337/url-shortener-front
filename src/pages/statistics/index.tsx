@@ -1,4 +1,4 @@
-import { Link, Box, Text, Flex, Grid, Divider } from "@chakra-ui/react";
+import { Link, Box, Text, Flex, Grid, Divider, Image } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUrlData } from "../../api";
 import { UrlMetadataType, UrlType } from "../../types";
@@ -69,61 +69,78 @@ export default function StatisticsPage({ match }: { match: any }) {
           <Text color="white" fontSize={30} mb={5}>
             Link Analytics
           </Text>
-          <Box
+          <Flex
             bg="white"
             px={5}
             py={4}
-            h="max-content"
+            h="130px"
             w="100%"
             boxShadow="5px 0 10px rgba(0,0,0,.3)"
             borderRadius="5px"
             position="relative"
+            gridGap={5}
+            alignItems="center"
           >
-            <Text mb={2}>{urlMetadata.title}</Text>
-            <Text color="gray.500">{urlData.originalUrl}</Text>
-            <Divider my={3} />
-            <Link color="blue.600" href={urlData.shortUrl}>
-              {urlData.shortUrl}
-            </Link>
-            <Box
-              position="absolute"
-              borderWidth="1px"
-              borderColor="gray.500"
-              color="gray.500"
-              px={2}
-              py={1}
-              top="10px"
-              right="10px"
-              borderRadius={5}
-              fontSize={14}
-            >
-              {urlData.date}
+            <Image
+              src={urlMetadata.image}
+              alt={urlMetadata.title}
+              borderRadius="10px"
+              h="max-content"
+              w="140px"
+            />
+            <Box>
+              <Text mb={2}>{urlMetadata.title}</Text>
+              <Text color="gray.500">{urlData.originalUrl}</Text>
+              <Divider my={3} />
+              <Link color="blue.600" href={urlData.shortUrl}>
+                {urlData.shortUrl}
+              </Link>
+              <Box
+                position="absolute"
+                borderWidth="1px"
+                borderColor="gray.500"
+                color="gray.500"
+                px={2}
+                py={1}
+                top="10px"
+                right="10px"
+                borderRadius={5}
+                fontSize={14}
+              >
+                {urlData.date}
+              </Box>
             </Box>
-          </Box>
-          <Grid w="100%" gridTemplateColumns="1fr 1fr" gridGap={10}>
-            <Chart
-              label={`Clicks: ${urlData.visitors.length}`}
-              data={urlData.visitors}
-              objKey="visitors"
-            />
-            <Chart
-              label={`Unique users: ${urlData.uniqueVisitors.length}`}
-              data={urlData.uniqueVisitors}
-              objKey="uniqueVisitors"
-            />
-            <Chart
-              label="Browsers"
-              type="bar"
-              data={urlData.uniqueVisitors}
-              objKey="browser"
-            />
-            <Chart
-              label="Devices"
-              type="bar"
-              data={urlData.uniqueVisitors}
-              objKey="os"
-            />
-          </Grid>
+          </Flex>
+          {urlData.visitors.length > 0 ? (
+            <Grid w="100%" gridTemplateColumns="1fr 1fr" gridGap={10}>
+              <Chart
+                label={`Clicks: ${urlData.visitors.length}`}
+                data={urlData.visitors}
+                objKey="visitors"
+              />
+              <Chart
+                label={`Unique users: ${urlData.uniqueVisitors.length}`}
+                data={urlData.uniqueVisitors}
+                objKey="uniqueVisitors"
+              />
+              <Chart
+                label="Browsers"
+                type="bar"
+                data={urlData.uniqueVisitors}
+                objKey="browser"
+              />
+              <Chart
+                label="Devices"
+                type="bar"
+                data={urlData.uniqueVisitors}
+                objKey="os"
+              />
+            </Grid>
+          ) : (
+            <Text textAlign="center" mt={50} fontSize={32} color="white">
+              No one visited this link yet
+            </Text>
+          )}
         </>
       )}
     </Box>
