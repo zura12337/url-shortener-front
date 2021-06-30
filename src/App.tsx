@@ -1,13 +1,21 @@
 import * as React from "react";
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Switch, Route } from "react-router-dom";
+import HomePage from "./pages/home";
+import "@fontsource/jomhuria/";
+import "@fontsource/ubuntu";
 
-export const App = () => <Box>Testing</Box>;
+const theme = extendTheme({
+  fonts: {
+    heading: "Jomhuria",
+    body: "Ubuntu",
+  },
+});
+
+export const App = () => (
+  <ChakraProvider theme={theme}>
+    <Switch>
+      <Route path="/" component={HomePage} />
+    </Switch>
+  </ChakraProvider>
+);
