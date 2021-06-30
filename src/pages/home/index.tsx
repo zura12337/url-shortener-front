@@ -11,10 +11,11 @@ import {
 import React, { useEffect, useState } from "react";
 import { getMyUrls, shortenUrl } from "../../api";
 import { useHistory } from "react-router-dom";
+import { UrlType } from "../../types";
 
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
-  const [myUrls, setMyUrls] = useState<[]>([]);
+  const [myUrls, setMyUrls] = useState<UrlType[]>([]);
   const toast = useToast();
   const history = useHistory();
 
@@ -74,6 +75,9 @@ export default function HomePage() {
           zIndex={1}
           onClick={async () => {
             const response = await shortenUrl(url);
+            if (response.status === 200) {
+              setMyUrls([response.data, ...myUrls]);
+            }
           }}
         >
           Shorten
@@ -81,16 +85,16 @@ export default function HomePage() {
       </Box>
       {myUrls && myUrls.length > 0 && (
         <Box
-          w="60%"
+          w="65%"
           h="max-content"
           p={5}
           bg="white"
           borderRadius="9px"
           mt={10}
         >
-          {myUrls.map((url: any) => (
+          {myUrls.map((url: UrlType) => (
             <Grid
-              gridTemplateColumns="5fr 1fr 1fr 1.5fr"
+              gridTemplateColumns="6fr 3fr 1fr 1.5fr"
               gridGap={5}
               alignItems="center"
               mt={3}
@@ -98,7 +102,7 @@ export default function HomePage() {
               <Text w="300px" noOfLines={1} textOverflow="ellipsis">
                 {url.originalUrl}
               </Text>
-              <Link color="blue.500" href={url.shortUrl}>
+              <Link color="blue.500" href={url.shortUrl} noOfLines={1}>
                 {url.shortUrl}
               </Link>
               <Button
