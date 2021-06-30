@@ -1,10 +1,33 @@
-import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { shortenUrl } from "../../api";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Input,
+  Link,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { getMyUrls, shortenUrl } from "../../api";
+import { useHistory } from "react-router-dom";
 
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
-  const [error, setError] = useState<string>("TESTING");
+  const [myUrls, setMyUrls] = useState<[]>([]);
+  const toast = useToast();
+  const history = useHistory();
+
+  useEffect(() => {
+    fetchUrls();
+  }, []);
+
+  const fetchUrls = async () => {
+    const response = await getMyUrls();
+    if (response.status === 200) {
+      setMyUrls(response.data);
+    }
+  };
 
   return (
     <Flex
@@ -35,7 +58,6 @@ export default function HomePage() {
           h="60px"
           p={5}
           onChange={(e: any) => setUrl(e.target.value)}
-          border={error && "3px solid red.400"}
         />
         <Button
           position="absolute"
@@ -52,12 +74,66 @@ export default function HomePage() {
           zIndex={1}
           onClick={async () => {
             const response = await shortenUrl(url);
-            console.log(response);
           }}
         >
           Shorten
         </Button>
       </Box>
+      {myUrls && myUrls.length > 0 && (
+        <Box
+          w="60%"
+          h="max-content"
+          p={5}
+          bg="white"
+          borderRadius="9px"
+          mt={10}
+        >
+          {myUrls.map((url: any) => (
+            <Grid
+              gridTemplateColumns="5fr 1fr 1fr 1.5fr"
+              gridGap={5}
+              alignItems="center"
+              mt={3}
+            >
+              <Text w="300px" noOfLines={1} textOverflow="ellipsis">
+                {url.originalUrl}
+              </Text>
+              <Link color="blue.500" href={url.shortUrl}>
+                {url.shortUrl}
+              </Link>
+              <Button
+                border="3px solid #364D66"
+                bg="none"
+                color="#364D66"
+                _hover={{ bg: "#364D66", color: "white" }}
+                _active={{}}
+                onClick={() => {
+                  navigator.clipboard.writeText(url.shortUrl);
+                  toast({
+                    title: "Link copied succesfully",
+                    duration: 2000,
+                    isClosable: true,
+                  });
+                }}
+              >
+                Copy
+              </Button>
+              <Button
+                border="3px solid #364D66"
+                bg="none"
+                color="#364D66"
+                _hover={{ bg: "#364D66", color: "white" }}
+                _active={{}}
+                onClick={() => {
+                  history.push(`/statistics/${url.id}`);
+                }}
+              >
+                Statistics
+              </Button>
+            </Grid>
+          ))}
+        </Box>
+      )}
     </Flex>
   );
 }
