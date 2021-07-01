@@ -10,7 +10,7 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
   const history = useHistory();
 
   return (
-    <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px" mt={10}>
+    <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px">
       {urls && urls.length > 0 ? (urls.map((url: UrlType) => (
         <Grid
           gridTemplateColumns="7fr 6fr 1fr 1.5fr"
