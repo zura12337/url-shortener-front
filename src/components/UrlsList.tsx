@@ -9,15 +9,15 @@ export default function UrlsList({ urls }: { urls: UrlType[] }) {
   const history = useHistory();
 
   return (
-    <Box w="65%" h="max-content" p={5} bg="white" borderRadius="9px" mt={10}>
+    <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px" mt={10}>
       {urls.map((url: UrlType) => (
         <Grid
-          gridTemplateColumns="6fr 3fr 1fr 1.5fr"
+          gridTemplateColumns="7fr 6fr 1fr 1.5fr"
           gridGap={5}
           alignItems="center"
           mt={3}
         >
-          <Text w="300px" noOfLines={1} textOverflow="ellipsis">
+          <Text noOfLines={1} textOverflow="ellipsis">
             {url.originalUrl}
           </Text>
           <Link color="blue.500" href={url.shortUrl} noOfLines={1}>
