@@ -126,14 +126,20 @@ export default function StatisticsPage({ match }: { match: any }) {
               <Chart
                 label="Browsers"
                 type="bar"
-                data={urlData.uniqueVisitors}
+                data={urlData.visitors}
                 objKey="browser"
               />
               <Chart
                 label="Devices"
                 type="bar"
-                data={urlData.uniqueVisitors}
+                data={urlData.visitors}
                 objKey="os"
+              />
+              <Chart
+                label="Geolocation"
+                type="bar"
+                data={urlData.visitors}
+                objKey="location"
               />
             </Grid>
           ) : (
