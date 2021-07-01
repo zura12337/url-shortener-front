@@ -43,9 +43,8 @@ export default function StatisticsPage({ match }: { match: any }) {
       <SecondaryButton
         label="Go Back"
         onClick={() => history.push("/")}
-        position="absolute"
-        top="10px"
-        left="10px"
+        position="relative"
+        bottom="50px"
         bg="white"
         px={10}
         py={5}
