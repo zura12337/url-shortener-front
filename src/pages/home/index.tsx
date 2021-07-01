@@ -51,6 +51,7 @@ export default function HomePage() {
           fontSize={18}
           h="60px"
           p={5}
+          value={url}
           onChange={(e: any) => setUrl(e.target.value)}
         />
         <PrimaryButton
@@ -67,6 +68,7 @@ export default function HomePage() {
               }
               setMyUrls(newUrls);
             }
+            setUrl("");
           }}
           position="absolute"
           top="5px"
