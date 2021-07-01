@@ -5,6 +5,7 @@ import HomePage from "./pages/home";
 import "@fontsource/jomhuria/";
 import "@fontsource/ubuntu";
 import StatisticsPage from "./pages/statistics";
+import "./main.css";
 
 const theme = extendTheme({
   fonts: {
@@ -15,7 +16,7 @@ const theme = extendTheme({
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box minH="100vh" w="100%" bg="#364d66">
+    <Box>
       <Switch>
         <Route path="/statistics/:id" component={StatisticsPage} />
         <Route path="/" component={HomePage} />
