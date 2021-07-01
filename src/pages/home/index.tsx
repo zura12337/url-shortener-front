@@ -27,7 +27,6 @@ export default function HomePage() {
     <Flex
       w="100%"
       h="100vh"
-      bg="#364d66"
       alignItems="center"
       flexDirection="column"
       gridGap={5}
