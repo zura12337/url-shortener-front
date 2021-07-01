@@ -1,16 +1,6 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Grid,
-  Input,
-  Link,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Flex, Input, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getMyUrls, shortenUrl } from "../../api";
-import { useHistory } from "react-router-dom";
 import { UrlType } from "../../types";
 import UrlsList from "../../components/UrlsList";
 import PrimaryButton from "../../components/PrimaryButton";
@@ -18,8 +8,6 @@ import PrimaryButton from "../../components/PrimaryButton";
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
   const [myUrls, setMyUrls] = useState<UrlType[]>([]);
-  const toast = useToast();
-  const history = useHistory();
 
   useEffect(() => {
     fetchUrls();
@@ -67,7 +55,14 @@ export default function HomePage() {
           onClick={async () => {
             const response = await shortenUrl(url);
             if (response.status === 200) {
-              setMyUrls([response.data, ...myUrls]);
+              let newUrls;
+              if (myUrls.includes(response.data)) {
+                newUrls = myUrls.filter((url) => url.id !== response.data.id);
+                newUrls = [response.data, ...newUrls];
+              } else {
+                newUrls = [response.data, ...myUrls];
+              }
+              setMyUrls(newUrls);
             }
           }}
           position="absolute"
