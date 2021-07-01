@@ -8,16 +8,19 @@ import PrimaryButton from "../../components/PrimaryButton";
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
   const [myUrls, setMyUrls] = useState<UrlType[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchUrls();
   }, []);
 
   const fetchUrls = async () => {
+    setLoading(true);
     const response = await getMyUrls();
     if (response.status === 200) {
       setMyUrls(response.data);
     }
+    setLoading(false);
   };
 
   return (
@@ -70,7 +73,7 @@ export default function HomePage() {
           right="5px"
         />
       </Box>
-      {myUrls && myUrls.length > 0 && <UrlsList urls={myUrls} />}
+      <UrlsList urls={myUrls} loading={loading}/>
     </Flex>
   );
 }

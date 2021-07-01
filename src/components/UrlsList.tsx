@@ -3,14 +3,15 @@ import React from "react";
 import { UrlType } from "../types";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "./SecondaryButton";
+import {UrlLoading} from "./UrlLoading";
 
-export default function UrlsList({ urls }: { urls: UrlType[] }) {
+export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?: boolean }) {
   const toast = useToast();
   const history = useHistory();
 
   return (
     <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px" mt={10}>
-      {urls.map((url: UrlType) => (
+      {urls && urls.length > 0 ? (urls.map((url: UrlType) => (
         <Grid
           gridTemplateColumns="7fr 6fr 1fr 1.5fr"
           gridGap={5}
@@ -41,7 +42,18 @@ export default function UrlsList({ urls }: { urls: UrlType[] }) {
             }}
           />
         </Grid>
-      ))}
+      ))) : loading ? (
+        <>
+          <UrlLoading />
+          <UrlLoading />
+          <UrlLoading />
+          <UrlLoading />
+          <UrlLoading />
+          <UrlLoading />
+        </>
+      ) : (
+        <Text fontSize={22} textAlign="center" fontWeight="bold">You have not shortened URL yet.</Text>
+      )}
     </Box>
   );
 }
