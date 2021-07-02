@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import React, {useRef, useState, useEffect, useLayoutEffect} from "react";
 import {
   CartesianGrid,
   Line,
@@ -34,6 +34,24 @@ export default function Chart({
     "yellow",
     "silver",
   ];
+  const [chartWidth, setChartWidth] = useState<number>();
+
+  const ref: any = useRef(null);
+
+  const updateDimensions = () => {
+    if (ref?.current) setChartWidth(ref?.current?.clientWidth - 50);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateDimensions);
+    if(ref.current) {
+      setChartWidth(ref?.current?.clientWidth - 50);
+    }
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, []);
+
 
   const processData = (data: any[], key: string) => {
     const processedData: any[] = [];
@@ -57,20 +75,24 @@ export default function Chart({
     return processedData;
   };
 
+
+
   return (
     <Box
+      maxW="100%"
       bg="white"
       borderRadius="20px"
       boxShadow="5px 0 10px rgba(0,0,0,.3)"
       mt="30px"
       py={5}
       pr={10}
+      ref={ref}
     >
       <Text mb={5} ml={10} color="gray.700">
         {label}
       </Text>
       {type === "line" ? (
-        <LineChart width={570} height={300} data={processData(data, objKey)}>
+        <LineChart width={chartWidth} height={300} data={processData(data, objKey)}>
           <Line
             type="monotone"
             dataKey="count"
