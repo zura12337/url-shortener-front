@@ -117,36 +117,40 @@ export default function StatisticsPage({ match }: { match: any }) {
             </Box>
           </Flex>
           {urlData.visitors.length > 0 ? (
-            <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr"]} gridGap={10}>
-              <Chart
-                label={`Clicks: ${urlData.visitors.length}`}
-                data={urlData.visitors}
-                objKey="visitors"
-              />
-              <Chart
-                label={`Unique users: ${urlData.uniqueVisitors.length}`}
-                data={urlData.uniqueVisitors}
-                objKey="uniqueVisitors"
-              />
-              <Chart
-                label="Browsers"
-                type="bar"
-                data={urlData.visitors}
-                objKey="browser"
-              />
-              <Chart
-                label="Devices"
-                type="bar"
-                data={urlData.visitors}
-                objKey="os"
-              />
-              <Chart
-                label="Geolocation"
-                type="bar"
-                data={urlData.visitors}
-                objKey="location"
-              />
-            </Grid>
+            <>
+              <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr"]} gridGap={10}>
+                <Chart
+                  label={`Clicks: ${urlData.visitors.length}`}
+                  data={urlData.visitors}
+                  objKey="visitors"
+                />
+                <Chart
+                  label={`Unique users: ${urlData.uniqueVisitors.length}`}
+                  data={urlData.uniqueVisitors}
+                  objKey="uniqueVisitors"
+                />
+              </Grid>
+              <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr 1fr"]} gridGap={10}>
+                <Chart
+                  label="Browsers"
+                  type="bar"
+                  data={urlData.visitors}
+                  objKey="browser"
+                />
+                <Chart
+                  label="Devices"
+                  type="bar"
+                  data={urlData.visitors}
+                  objKey="os"
+                />
+                <Chart
+                  label="Geolocation"
+                  type="bar"
+                  data={urlData.visitors}
+                  objKey="location"
+                />
+              </Grid>
+            </>
           ) : (
             <Text textAlign="center" mt={50} fontSize={32} color="white">
               No one visited this link yet

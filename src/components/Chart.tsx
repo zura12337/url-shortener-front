@@ -39,13 +39,14 @@ export default function Chart({
   const ref: any = useRef(null);
 
   const updateDimensions = () => {
-    if (ref?.current) setChartWidth(ref?.current?.clientWidth - 50);
+    if (ref?.current) setChartWidth(ref?.current?.offsetWidth - 50);
   };
 
   useEffect(() => {
     window.addEventListener("resize", updateDimensions);
     if(ref.current) {
-      setChartWidth(ref?.current?.clientWidth - 50);
+      setChartWidth(ref?.current?.offsetWidth - 50);
+      console.log(ref.current.offsetWidth)
     }
     return () => {
       window.removeEventListener("resize", updateDimensions);
@@ -79,7 +80,6 @@ export default function Chart({
 
   return (
     <Box
-      maxW="100%"
       bg="white"
       borderRadius="20px"
       boxShadow="5px 0 10px rgba(0,0,0,.3)"
@@ -92,7 +92,7 @@ export default function Chart({
         {label}
       </Text>
       {type === "line" ? (
-        <LineChart width={chartWidth} height={300} data={processData(data, objKey)}>
+        <LineChart width={chartWidth} height={chartWidth - 300} data={processData(data, objKey)}>
           <Line
             type="monotone"
             dataKey="count"
@@ -109,14 +109,14 @@ export default function Chart({
           <Tooltip />
         </LineChart>
       ) : (
-        <PieChart width={570} height={300}>
+        <PieChart margin={{ left: 50 }} width={chartWidth} height={chartWidth - 160}>
           <Pie
             data={processData(data, objKey)}
             dataKey="count"
             nameKey={objKey}
             cx="50%"
             cy="50%"
-            outerRadius={130}
+            outerRadius={chartWidth / 5}
           >
             {processData(data, objKey).map((entry: any, index) => (
               <Cell key={`cell-${index}`} fill={colors[index]} />
