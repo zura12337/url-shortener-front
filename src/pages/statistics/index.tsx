@@ -111,7 +111,7 @@ export default function StatisticsPage({ match }: { match: any }) {
             </Box>
           </Flex>
           {urlData.visitors.length > 0 ? (
-            <Grid w="100%" gridTemplateColumns="1fr 1fr" gridGap={10}>
+            <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr"]} gridGap={10}>
               <Chart
                 label={`Clicks: ${urlData.visitors.length}`}
                 data={urlData.visitors}
