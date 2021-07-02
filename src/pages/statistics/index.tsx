@@ -63,7 +63,7 @@ export default function StatisticsPage({ match }: { match: any }) {
           <Loading />
         </Grid>
       )}
-      {urlData && urlMetadata && (
+      {urlData && (
         <>
           <Text color="white" fontSize={30} mb={5}>
             Link Analytics
@@ -80,15 +80,21 @@ export default function StatisticsPage({ match }: { match: any }) {
             gridGap={5}
             alignItems="center"
           >
-            <Image
-              src={urlMetadata.image}
-              alt={urlMetadata.title}
-              borderRadius="10px"
-              h="max-content"
-              w="140px"
-            />
+            {urlMetadata && (
+              <Image
+                src={urlMetadata.image}
+                alt={urlMetadata.title}
+                borderRadius="10px"
+                h="max-content"
+                maxH="100%"
+                objectFit="cover"
+                w="140px"
+              />
+            )}
             <Box>
-              <Text mb={2}>{urlMetadata.title}</Text>
+              {urlMetadata && (
+                <Text mb={2}>{urlMetadata.title}</Text>
+              )}
               <Text color="gray.500">{urlData.originalUrl}</Text>
               <Divider my={3} />
               <Link color="blue.600" href={urlData.shortUrl}>
