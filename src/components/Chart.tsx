@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import React, {useRef, useState, useEffect, useLayoutEffect} from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import {
   CartesianGrid,
   Line,
@@ -11,6 +11,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import { colors } from "../utils/colors";
 
 export default function Chart({
   label,
@@ -23,18 +24,7 @@ export default function Chart({
   type?: string;
   objKey: string;
 }) {
-  const colors = [
-    "blue",
-    "orange",
-    "red",
-    "cyan",
-    "green",
-    "gray",
-    "purple",
-    "yellow",
-    "silver",
-  ];
-  const [chartWidth, setChartWidth] = useState<number>();
+  const [chartWidth, setChartWidth] = useState<number>(0);
 
   const ref: any = useRef(null);
 
@@ -44,15 +34,13 @@ export default function Chart({
 
   useEffect(() => {
     window.addEventListener("resize", updateDimensions);
-    if(ref.current) {
+    if (ref.current) {
       setChartWidth(ref?.current?.offsetWidth - 50);
-      console.log(ref.current.offsetWidth)
     }
     return () => {
       window.removeEventListener("resize", updateDimensions);
     };
   }, []);
-
 
   const processData = (data: any[], key: string) => {
     const processedData: any[] = [];
@@ -76,8 +64,6 @@ export default function Chart({
     return processedData;
   };
 
-
-
   return (
     <Box
       bg="white"
@@ -92,7 +78,11 @@ export default function Chart({
         {label}
       </Text>
       {type === "line" ? (
-        <LineChart width={chartWidth} height={chartWidth - 300} data={processData(data, objKey)}>
+        <LineChart
+          width={chartWidth}
+          height={chartWidth - 300}
+          data={processData(data, objKey)}
+        >
           <Line
             type="monotone"
             dataKey="count"
@@ -109,7 +99,11 @@ export default function Chart({
           <Tooltip />
         </LineChart>
       ) : (
-        <PieChart margin={{ left: 50 }} width={chartWidth} height={chartWidth - 160}>
+        <PieChart
+          margin={{ left: 50 }}
+          width={chartWidth}
+          height={chartWidth - 160}
+        >
           <Pie
             data={processData(data, objKey)}
             dataKey="count"
