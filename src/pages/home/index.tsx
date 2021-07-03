@@ -74,7 +74,7 @@ export default function HomePage() {
           right="5px"
         />
       </Box>
-      <UrlsList urls={myUrls} loading={loading}/>
+      <UrlsList urls={myUrls} loading={loading} />
     </Flex>
   );
 }

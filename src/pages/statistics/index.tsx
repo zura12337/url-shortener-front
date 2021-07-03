@@ -92,9 +92,7 @@ export default function StatisticsPage({ match }: { match: any }) {
               />
             )}
             <Box>
-              {urlMetadata && (
-                <Text mb={2}>{urlMetadata.title}</Text>
-              )}
+              {urlMetadata && <Text mb={2}>{urlMetadata.title}</Text>}
               <Text color="gray.500">{urlData.originalUrl}</Text>
               <Divider my={3} />
               <Link color="blue.600" href={urlData.shortUrl}>
@@ -118,19 +116,33 @@ export default function StatisticsPage({ match }: { match: any }) {
           </Flex>
           {urlData.visitors.length > 0 ? (
             <>
-              <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr"]} gridGap={10}>
+              <Grid
+                maxW="100%"
+                gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr"]}
+                gridGap={10}
+              >
                 <Chart
                   label={`Clicks: ${urlData.visitors.length}`}
                   data={urlData.visitors}
-                  objKey="visitors"
+                  objKey="date"
                 />
                 <Chart
                   label={`Unique users: ${urlData.uniqueVisitors.length}`}
                   data={urlData.uniqueVisitors}
-                  objKey="uniqueVisitors"
+                  objKey="date"
                 />
               </Grid>
-              <Grid maxW="100%" gridTemplateColumns={["1fr", "1fr", "1fr", "1fr", "1fr 1fr 1fr"]} gridGap={10}>
+              <Grid
+                maxW="100%"
+                gridTemplateColumns={[
+                  "1fr",
+                  "1fr",
+                  "1fr",
+                  "1fr",
+                  "1fr 1fr 1fr",
+                ]}
+                gridGap={10}
+              >
                 <Chart
                   label="Browsers"
                   type="bar"
