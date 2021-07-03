@@ -21,7 +21,7 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
           <Text noOfLines={1} textOverflow="ellipsis">
             {url.originalUrl}
           </Text>
-          <Link color="blue.500" href={url.shortUrl} noOfLines={1}>
+          <Link color="blue.500" href={url.shortUrl} noOfLines={1} _focus={{}}>
             {url.shortUrl}
           </Link>
           <SecondaryButton

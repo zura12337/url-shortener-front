@@ -95,7 +95,7 @@ export default function StatisticsPage({ match }: { match: any }) {
               {urlMetadata && <Text mb={2}>{urlMetadata.title}</Text>}
               <Text color="gray.500">{urlData.originalUrl}</Text>
               <Divider my={3} />
-              <Link color="blue.600" href={urlData.shortUrl}>
+              <Link color="blue.600" href={urlData.shortUrl} _focus={{}}>
                 {urlData.shortUrl}
               </Link>
               <Box
