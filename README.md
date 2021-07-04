@@ -1,7 +1,7 @@
 # URL Shortener front
 
 
-##### Link shortener created with MERN 
+##### Link shortener created with MERN Stack
 &nbsp;
 #### Project setup 🔧
 - npm install / yarn install
