@@ -3,7 +3,7 @@
 import axios from "axios";
 import useSWR from "swr";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = "https://url-shortener-api-z.herokuapp.com"
 
 const fetcher = (url: string) => axios(url).then((res) => res.data);
 
