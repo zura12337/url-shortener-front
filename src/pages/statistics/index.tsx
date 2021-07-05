@@ -19,24 +19,11 @@ import Chart from "../../components/Chart";
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
-  const [urlData, setUrlData] = useState<UrlType>();
-  const [urlMetadata, setUrlMetadata] = useState<UrlMetadataType>();
   const history = useHistory();
-  const [loading, isLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    fetchUrl();
-  }, []);
-
-  const fetchUrl = async () => {
-    isLoading(true);
-    const response = await getUrlData(id);
-    if (response.status === 200) {
-      setUrlData(response.data.url);
-      setUrlMetadata(response.data.metadata);
-    }
-    isLoading(false);
-  };
+  const {
+    data: { url: urlData, metadata: urlMetadata },
+    isLoading: loading,
+  } = getUrlData(id);
 
   return (
     <Box pt="5%" px="10%">

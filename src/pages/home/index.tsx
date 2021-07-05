@@ -7,22 +7,13 @@ import PrimaryButton from "../../components/PrimaryButton";
 
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
-  const [myUrls, setMyUrls] = useState<UrlType[]>([]);
-  const [urlsLoading, setUrlsLoading] = useState<boolean>(false);
+  const { data: urls, isLoading: urlsLoading, error } = getMyUrls();
+  const [myUrls, setMyUrls] = useState<UrlType[]>([])
   const [newUrlLoading, setNewUrlLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchUrls();
-  }, []);
-
-  const fetchUrls = async () => {
-    setUrlsLoading(true);
-    const response = await getMyUrls();
-    if (response.status === 200) {
-      setMyUrls(response.data);
-    }
-    setUrlsLoading(false);
-  };
+    setMyUrls(urls);
+  }, [urls])
 
   return (
     <Flex

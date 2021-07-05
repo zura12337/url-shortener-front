@@ -1,6 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+//@ts-nocheck
 import axios from "axios";
+import useSWR from "swr";
 
 const apiUrl = process.env.REACT_APP_API_URL;
+
+const fetcher = (url: string) => axios(url).then((res) => res.data);
 
 export async function shortenUrl(url: string) {
   try {
@@ -11,29 +16,31 @@ export async function shortenUrl(url: string) {
   }
 }
 
-export async function getUrlById(id: string) {
-  try {
-    const response = await axios.get(`${apiUrl}/${id}`);
-    return response;
-  } catch(ex) {
-    return null;
-  }
+export function getUrlById(id: string) {
+  const { data, error } = useSWR(`${apiUrl}/${id}`, fetcher);
+
+  return {
+    data,
+    error,
+  };
 }
 
-export async function getMyUrls() {
-  try {
-    const response = await axios.get(`${apiUrl}/urls/me`);
-    return response;
-  } catch (ex) {
-    return ex.response;
-  }
+export function getMyUrls() {
+  const { data, error } = useSWR(`${apiUrl}/urls/me`, fetcher);
+
+  return {
+    data,
+    isLoading: !data && !error,
+    error,
+  };
 }
 
-export async function getUrlData(id: string) {
-  try {
-    const response = await axios.get(`${apiUrl}/statistics/${id}`);
-    return response;
-  } catch (ex) {
-    return ex.response;
-  }
+export function getUrlData(id: string) {
+  const { data, error } = useSWR(`${apiUrl}/statistics/${id}`, fetcher);
+
+  return {
+    data,
+    isLoading: !data && !error,
+    error,
+  };
 }

@@ -1,25 +1,19 @@
-import React, { ReactElement, useEffect } from "react"
-import {getUrlById} from "../../api";
-import {useHistory} from "react-router-dom";
+import React, { ReactElement, useEffect } from "react";
+import { getUrlById } from "../../api";
+import { useHistory } from "react-router-dom";
 
 export function RedirectPage({ match }: { match: any }): ReactElement | null {
-  const id = match.params.id; 
+  const id = match.params.id;
   const history = useHistory();
+  const { data: link, error } = getUrlById(id);
 
   useEffect(() => {
-    getLink()
-  }, [])
-
-  const getLink = async () => {
-    const response = await getUrlById(id);
-    if(response) {
-      window.location.href = response.data;
-    } else {
+    if (link) {
+      window.location.href = link;
+    } else if (error) {
       history.push("/404");
     }
-  }
+  }, [link]);
 
-  return (
-    <></>
-  )
+  return <></>;
 }
