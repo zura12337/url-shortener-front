@@ -8,6 +8,8 @@ import StatisticsPage from "./pages/statistics";
 import "./main.css";
 import { RedirectPage } from "./pages/redirect";
 
+require('dotenv').config();
+
 const theme = extendTheme({
   fonts: {
     heading: "Jomhuria",
