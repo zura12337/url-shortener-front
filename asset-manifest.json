@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/url-shortener-front/static/css/main.b9185a6d.chunk.css",
+    "main.js": "/url-shortener-front/static/js/main.bc317d2b.chunk.js",
+    "main.js.map": "/url-shortener-front/static/js/main.bc317d2b.chunk.js.map",
+    "runtime-main.js": "/url-shortener-front/static/js/runtime-main.0e5bdf19.js",
+    "runtime-main.js.map": "/url-shortener-front/static/js/runtime-main.0e5bdf19.js.map",
+    "static/css/2.e86b2fba.chunk.css": "/url-shortener-front/static/css/2.e86b2fba.chunk.css",
+    "static/js/2.23c1ef8f.chunk.js": "/url-shortener-front/static/js/2.23c1ef8f.chunk.js",
+    "static/js/2.23c1ef8f.chunk.js.map": "/url-shortener-front/static/js/2.23c1ef8f.chunk.js.map",
+    "index.html": "/url-shortener-front/index.html",
+    "static/css/2.e86b2fba.chunk.css.map": "/url-shortener-front/static/css/2.e86b2fba.chunk.css.map",
+    "static/css/main.b9185a6d.chunk.css.map": "/url-shortener-front/static/css/main.b9185a6d.chunk.css.map",
+    "static/js/2.23c1ef8f.chunk.js.LICENSE.txt": "/url-shortener-front/static/js/2.23c1ef8f.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/url-shortener-front/static/media/ubuntu-latin-ext-400-normal.a1317532.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0e5bdf19.js",
+    "static/css/2.e86b2fba.chunk.css",
+    "static/js/2.23c1ef8f.chunk.js",
+    "static/css/main.b9185a6d.chunk.css",
+    "static/js/main.bc317d2b.chunk.js"
+  ]
+}
