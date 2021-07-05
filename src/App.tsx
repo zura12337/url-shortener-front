@@ -6,6 +6,7 @@ import "@fontsource/jomhuria/";
 import "@fontsource/ubuntu";
 import StatisticsPage from "./pages/statistics";
 import "./main.css";
+import {RedirectPage} from "./pages/redirect";
 
 const theme = extendTheme({
   fonts: {
@@ -18,6 +19,7 @@ export const App = () => (
   <ChakraProvider theme={theme}>
     <Box>
       <Switch>
+        <Route path="/:id" component={RedirectPage} />
         <Route path="/statistics/:id" component={StatisticsPage} />
         <Route path="/" component={HomePage} />
       </Switch>
