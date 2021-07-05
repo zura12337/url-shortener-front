@@ -61,6 +61,10 @@ export default function Chart({
       }
     });
 
+    processedData.sort(function(a: any, b: any) {
+      return new Date(a.date) - new Date(b.date);
+    })
+
     return processedData;
   };
 
@@ -69,7 +73,7 @@ export default function Chart({
       bg="white"
       borderRadius="20px"
       boxShadow="5px 0 10px rgba(0,0,0,.3)"
-      mt="30px"
+      my="15px"
       py={5}
       pr={10}
       ref={ref}
