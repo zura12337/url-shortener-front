@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Text, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getMyUrls, shortenUrl } from "../../api";
 import { UrlType } from "../../types";
@@ -7,9 +7,10 @@ import PrimaryButton from "../../components/PrimaryButton";
 
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
-  const { data: urls, isLoading: urlsLoading, error } = getMyUrls();
+  const { data: urls, isLoading: urlsLoading } = getMyUrls();
   const [myUrls, setMyUrls] = useState<UrlType[]>([])
   const [newUrlLoading, setNewUrlLoading] = useState<boolean>(false);
+  const toast = useToast();
 
   useEffect(() => {
     setMyUrls(urls);
@@ -44,6 +45,7 @@ export default function HomePage() {
           p={5}
           value={url}
           onChange={(e: any) => setUrl(e.target.value)}
+          borderWidth="2px"
         />
         <PrimaryButton
           label="Shorten"
@@ -59,6 +61,12 @@ export default function HomePage() {
                 newUrls = [response.data, ...myUrls];
               }
               setMyUrls(newUrls);
+            } else {
+              toast({
+                title: response.data,
+                status: "error",
+                isClosable: true,
+              })
             }
             setUrl("");
             setNewUrlLoading(false);
