@@ -8,19 +8,20 @@ import PrimaryButton from "../../components/PrimaryButton";
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
   const [myUrls, setMyUrls] = useState<UrlType[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [urlsLoading, setUrlsLoading] = useState<boolean>(false);
+  const [newUrlLoading, setNewUrlLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchUrls();
   }, []);
 
   const fetchUrls = async () => {
-    setLoading(true);
+    setUrlsLoading(true);
     const response = await getMyUrls();
     if (response.status === 200) {
       setMyUrls(response.data);
     }
-    setLoading(false);
+    setUrlsLoading(false);
   };
 
   return (
@@ -56,6 +57,7 @@ export default function HomePage() {
         <PrimaryButton
           label="Shorten"
           onClick={async () => {
+            setNewUrlLoading(true);
             const response = await shortenUrl(url);
             if (response.status === 200) {
               let newUrls;
@@ -68,13 +70,15 @@ export default function HomePage() {
               setMyUrls(newUrls);
             }
             setUrl("");
+            setNewUrlLoading(false);
           }}
+          loading={newUrlLoading}
           position="absolute"
           top="5px"
           right="5px"
         />
       </Box>
-      <UrlsList urls={myUrls} loading={loading} />
+      <UrlsList urls={myUrls} loading={urlsLoading} />
     </Flex>
   );
 }

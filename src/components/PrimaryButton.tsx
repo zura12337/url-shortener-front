@@ -1,13 +1,16 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
+import { ClipLoader } from 'react-spinners'
 
 export default function PrimaryButton({
   label,
   onClick,
+  loading,
   ...rest
 }: {
   label: string;
   onClick: Function;
+  loading?: boolean,
   [x: string]: any;
 }) {
   return (
@@ -22,8 +25,12 @@ export default function PrimaryButton({
       _active={{}}
       zIndex={1}
       onClick={() => onClick()}
+      display="flex"
+      gridGap={3}
+      disabled={loading}
       {...rest}
     >
+      {loading && <ClipLoader size={18} color="white"/>}
       {label}
     </Button>
   );
