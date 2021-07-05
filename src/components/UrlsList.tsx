@@ -1,22 +1,24 @@
 import { Box, Button, Grid, Link, Text, useToast } from "@chakra-ui/react";
-import React from "react";
+import React, {useState} from "react";
 import { UrlType } from "../types";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "./SecondaryButton";
 import {UrlLoading} from "./UrlLoading";
 
 export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?: boolean }) {
+  const [copied, setCopied] = useState<number>();
+
   const toast = useToast();
   const history = useHistory();
 
   return (
-    <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px">
-      {urls && urls.length > 0 ? (urls.map((url: UrlType) => (
+    <Box w="75%" h="max-content" px={5} bg="white" borderRadius="9px">
+      {urls && urls.length > 0 ? (urls.map((url: UrlType, i: number) => (
         <Grid
           gridTemplateColumns="7fr 2.7fr 1fr 1.4fr"
           gridGap={5}
           alignItems="center"
-          mt={3}
+          my={4}
         >
           <Text noOfLines={1} textOverflow="ellipsis">
             {url.originalUrl}
@@ -25,7 +27,9 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
             {url.shortUrl}
           </Link>
           <SecondaryButton
-            label="Copy"
+            label={copied === i ? "Copied!" : "Copy"}
+            bg={copied === i ? "#364D66" : "none"}
+            color={copied === i ? "white" : "#364D66"}
             onClick={() => {
               navigator.clipboard.writeText(url.shortUrl);
               toast({
@@ -33,6 +37,7 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
                 duration: 2000,
                 isClosable: true,
               });
+              setCopied(i)
             }}
           />
           <SecondaryButton

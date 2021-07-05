@@ -2,20 +2,11 @@ import { Link, Box, Text, Flex, Grid, Divider, Image } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUrlData } from "../../api";
 import { UrlMetadataType, UrlType } from "../../types";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  PieChart,
-  Pie,
-} from "recharts";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
 import Loading from "../../components/Loading";
 import Chart from "../../components/Chart";
+import ImagePlaceholder from '../../assets/image_placeholder.jpg';
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
@@ -37,7 +28,6 @@ export default function StatisticsPage({ match }: { match: any }) {
         label="Go Back"
         onClick={() => history.push("/")}
         position="relative"
-        bottom="50px"
         bg="white"
         px={10}
         py={5}
@@ -58,7 +48,7 @@ export default function StatisticsPage({ match }: { match: any }) {
       )}
       {urlData && (
         <>
-          <Text color="white" fontSize={30} mb={5}>
+          <Text color="white" fontSize={30} mb={5} float="right">
             Link Analytics
           </Text>
           <Flex
@@ -75,7 +65,7 @@ export default function StatisticsPage({ match }: { match: any }) {
           >
             {urlMetadata && (
               <Image
-                src={urlMetadata.image}
+                src={urlMetadata.image || ImagePlaceholder}
                 alt={urlMetadata.title}
                 borderRadius="10px"
                 h="max-content"
