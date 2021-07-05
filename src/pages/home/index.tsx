@@ -25,7 +25,7 @@ export default function HomePage() {
     >
       <Text
         fontFamily="heading"
-        fontSize={62}
+        fontSize={75}
         letterSpacing="1.2px"
         color="white"
         mt={100}
