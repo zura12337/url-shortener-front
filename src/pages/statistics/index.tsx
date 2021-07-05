@@ -20,10 +20,16 @@ import Chart from "../../components/Chart";
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
   const history = useHistory();
-  const {
-    data: { url: urlData, metadata: urlMetadata },
-    isLoading: loading,
-  } = getUrlData(id);
+  const { data, isLoading: loading } = getUrlData(id);
+  const [urlData, setUrlData] = useState<UrlType>();
+  const [urlMetadata, setUrlMetadata] = useState<UrlMetadataType>();
+
+  useEffect(() => {
+    if (data) {
+      setUrlData(data.url);
+      setUrlMetadata(data.metadata);
+    }
+  }, [data]);
 
   return (
     <Box pt="5%" px="10%">

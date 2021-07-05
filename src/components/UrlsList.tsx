@@ -13,7 +13,7 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
     <Box w="75%" h="max-content" p={5} bg="white" borderRadius="9px">
       {urls && urls.length > 0 ? (urls.map((url: UrlType) => (
         <Grid
-          gridTemplateColumns="7fr 6fr 1fr 1.5fr"
+          gridTemplateColumns="7fr 2.7fr 1fr 1.4fr"
           gridGap={5}
           alignItems="center"
           mt={3}
