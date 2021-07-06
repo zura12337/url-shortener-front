@@ -88,7 +88,7 @@ export default function Chart({
           data={processData(data, objKey)}
         >
           <Line
-            type="monotone"
+            type="linear"
             dataKey="count"
             stroke="#325a84"
             strokeWidth="3px"
