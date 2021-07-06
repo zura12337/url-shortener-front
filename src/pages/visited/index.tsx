@@ -8,7 +8,7 @@ export default function VisitedUrlsPage() {
 
   return (
     <Flex w="100%" minH="90vh" justifyContent="center" alignItems="center">
-      <UrlsList urls={links} loading={isLoading} />
+      <UrlsList urls={links} loading={isLoading} filterOption={true} />
     </Flex>
   );
 }

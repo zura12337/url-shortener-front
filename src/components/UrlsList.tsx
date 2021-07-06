@@ -17,9 +17,11 @@ import { UrlLoading } from "./UrlLoading";
 export default function UrlsList({
   urls,
   loading,
+  filterOption = false,
 }: {
   urls: UrlType[];
   loading?: boolean;
+  filterOption?: boolean;
 }) {
   const [copied, setCopied] = useState<number>();
   const [filterRemoved, setFilterRemoved] = useState<boolean>(false);
@@ -29,17 +31,19 @@ export default function UrlsList({
 
   return (
     <Box w="75%" h="max-content" px={5} bg="white" borderRadius="9px">
-      <Flex alignItems="center" gridGap={2} justifyContent="flex-end">
-        <Checkbox
-          name="filter"
-          my={5}
-          id="filter"
-          onChange={(e: any) => setFilterRemoved(e.target.checked)}
-        />
-        <Text fontWeight="medium">
-          <label htmlFor="filter">Filter removed urls</label>
-        </Text>
-      </Flex>
+      {filterOption && (
+        <Flex alignItems="center" gridGap={2} justifyContent="flex-end">
+          <Checkbox
+            name="filter"
+            my={5}
+            id="filter"
+            onChange={(e: any) => setFilterRemoved(e.target.checked)}
+          />
+          <Text fontWeight="medium">
+            <label htmlFor="filter">Filter removed urls</label>
+          </Text>
+        </Flex>
+      )}
       {urls && urls.length > 0 ? (
         urls
           .filter((url) =>
@@ -54,10 +58,13 @@ export default function UrlsList({
               key={url._id}
             >
               {url.status === "remove" && !filterRemoved ? (
-                <Text my="7px">[Removed]</Text>
+                <Text my="7px" fontWeight="bold">
+                  [Removed]
+                </Text>
               ) : (
                 <>
                   <Text noOfLines={1} textOverflow="ellipsis">
+                    <strong>{url.status === "pause" && "[Disabled]"}</strong>{" "}
                     {url.originalUrl}
                   </Text>
                   <Link

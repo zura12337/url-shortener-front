@@ -1,11 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { getUrlById } from "../../api";
 import { useHistory } from "react-router-dom";
-import {Text} from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 export function RedirectPage({ match }: { match: any }): ReactElement | null {
   const id = match.params.id;
-  const history = useHistory();
   const [link, setLink] = useState<string>();
   const [error, setError] = useState<string>();
 
@@ -14,21 +13,25 @@ export function RedirectPage({ match }: { match: any }): ReactElement | null {
   }, []);
 
   useEffect(() => {
-    if(link) {
+    if (link) {
       window.location.href = link;
     }
-  }, [link])
-  
+  }, [link]);
+
   const fetchUrl = async () => {
     const response = await getUrlById(id);
-    if(response.status === 200) {
+    if (response.status === 200) {
       setLink(response.data);
     } else {
       setError(response.data);
     }
-  }
+  };
 
-  return <><Text color="white" textAlign="center" mt="20%" fontSize={38}>
-    {error && error}
-  </Text></>;
+  return (
+    <>
+      <Text color="white" textAlign="center" mt="20%" fontSize={38}>
+        {error && error}
+      </Text>
+    </>
+  );
 }
