@@ -106,7 +106,7 @@ export default function StatisticsPage({ match }: { match: any }) {
                           const response: any = await editUrl({ id, action: "pause" })
                           if(response?.status === 200) {
                             toast({
-                              title: "Link has been paused",
+                              title: "Link has been disabled",
                               isClosable: true,
                             })
                           } else if (response) {
@@ -118,14 +118,14 @@ export default function StatisticsPage({ match }: { match: any }) {
                           }
                         }}
                       >
-                        Pause Link
+                        Disable Link
                       </Button> 
                     ) : (
                       <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
                           const response: any = await editUrl({ id, action: "unpause" })
                           if(response?.status === 200) {
                             toast({
-                              title: "Link has been unpaused",
+                              title: "Link has been enabled",
                               isClosable: true,
                             })
                           } else if (response) {
@@ -137,7 +137,7 @@ export default function StatisticsPage({ match }: { match: any }) {
                         }
                         }}
                       >
-                        Unpause Link
+                        Enable Link
                       </Button> 
                     )}
                     <Button _hover={{}} _active={{}} bg="none" _focus={{}} p={0} fontSize={12}  h="max-content" w="max-content" onClick={async () => {
@@ -147,6 +147,7 @@ export default function StatisticsPage({ match }: { match: any }) {
                             title: "Link has been removed",
                             isClosable: true,
                           })
+                          history.push("/")
                         } else if (response) {
                           toast({
                             title: response?.data,
@@ -218,13 +219,13 @@ export default function StatisticsPage({ match }: { match: any }) {
           ) : (
             <Flex justifyContent="center" alignItems="center" direction="column" gridGap={5} bg="white" borderRadius={9} mt="15px" py={10}>
               <Text textAlign="center" fontSize={32}>
-                This URL is paused
+                This URL is disabled
               </Text>
-              <SecondaryButton bg="white" label="Unpause" onClick={async () => {
+              <SecondaryButton bg="white" label="Enable" onClick={async () => {
                 const response = await editUrl({ id, action: "unpause" })
                 if(response.statusText === "OK") {
                   toast({
-                    title: "Link has been unpaused",
+                    title: "Link has been enabled",
                     isClosable: true,
                   })
                 } 
