@@ -57,7 +57,7 @@ export default function UrlsList({ urls, loading }: { urls: UrlType[], loading?:
           <UrlLoading />
         </>
       ) : (
-        <Text fontSize={22} textAlign="center" fontWeight="bold">You have not shortened URL yet.</Text>
+        <Text fontSize={22} textAlign="center" fontWeight="bold" my={7}>You have not shortened URL yet.</Text>
       )}
     </Box>
   );
