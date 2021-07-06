@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Box, ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import { Switch, Route } from "react-router-dom";
 import HomePage from "./pages/home";
 import "@fontsource/jomhuria/";
@@ -7,8 +7,11 @@ import "@fontsource/ubuntu";
 import StatisticsPage from "./pages/statistics";
 import "./main.css";
 import { RedirectPage } from "./pages/redirect";
+import SecondaryButton from "./components/SecondaryButton";
+import NavBar from "./components/NavBar";
+import VisitedUrlsPage from "./pages/visited";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const theme = extendTheme({
   fonts: {
@@ -20,7 +23,9 @@ const theme = extendTheme({
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Box>
+      <NavBar />
       <Switch>
+        <Route path="/visited" component={VisitedUrlsPage} />
         <Route path="/statistics/:id" component={StatisticsPage} />
         <Route path="/:id" component={RedirectPage} />
         <Route path="/" component={HomePage} />

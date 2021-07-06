@@ -3,7 +3,7 @@
 import axios from "axios";
 import useSWR from "swr";
 
-const apiUrl = "https://url-shortener-api-z.herokuapp.com/api";
+const apiUrl = "http://localhost:4000/api";
 
 const fetcher = (url: string) => axios(url).then((res) => res.data);
 
@@ -20,7 +20,7 @@ export async function getUrlById(id: string) {
   try {
     const response = await axios.get(`${apiUrl}/url/${id}`);
     return response;
-  } catch(ex) {
+  } catch (ex) {
     return ex.response;
   }
 }
@@ -29,10 +29,10 @@ export function getMyVisitedLinks() {
   const { data, error } = useSWR(`${apiUrl}/visited`, fetcher);
 
   return {
-    data,
+    links: data,
     isLoading: !data && !error,
-    error
-  }
+    error,
+  };
 }
 
 export function getUserRole(id: string) {
@@ -40,15 +40,15 @@ export function getUserRole(id: string) {
 
   return {
     role: data,
-    error
-  }
+    error,
+  };
 }
 
 export async function editUrl(data: any) {
   try {
     const response = await axios.put(`${apiUrl}/url/edit`, data);
     return response;
-  } catch(ex) {
+  } catch (ex) {
     return ex.response;
   }
 }

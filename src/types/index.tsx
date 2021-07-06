@@ -1,4 +1,5 @@
 export interface UrlType {
+  _id?: string;
   browser: any;
   originalUrl: string;
   id: string;

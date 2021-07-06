@@ -1,4 +1,14 @@
-import { Link, Box, Text, Flex, Grid, Divider, Image, Button, useToast } from "@chakra-ui/react";
+import {
+  Link,
+  Box,
+  Text,
+  Flex,
+  Grid,
+  Divider,
+  Image,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getUrlData, editUrl, getUserRole } from "../../api";
 import { UrlMetadataType, UrlType } from "../../types";
@@ -6,9 +16,9 @@ import { useHistory } from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
 import Loading from "../../components/Loading";
 import Chart from "../../components/Chart";
-import ImagePlaceholder from '../../assets/image_placeholder.jpg';
-import {Dropdown} from "../../components/Dropdown";
-import { FiMoreHorizontal } from 'react-icons/fi';
+import ImagePlaceholder from "../../assets/image_placeholder.jpg";
+import { Dropdown } from "../../components/Dropdown";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
@@ -16,7 +26,6 @@ export default function StatisticsPage({ match }: { match: any }) {
   const { data, isLoading: loading } = getUrlData(id);
   const [urlData, setUrlData] = useState<UrlType>();
   const [urlMetadata, setUrlMetadata] = useState<UrlMetadataType>();
-  const [expanded, setExpanded] = useState<boolean>(false);
   const toast = useToast();
   const { role } = getUserRole(id);
 
@@ -24,7 +33,7 @@ export default function StatisticsPage({ match }: { match: any }) {
     if (data) {
       setUrlData(data.url);
       setUrlMetadata(data.metadata);
-    } 
+    }
   }, [data]);
 
   return (
@@ -100,65 +109,106 @@ export default function StatisticsPage({ match }: { match: any }) {
                 {urlData.date}
               </Box>
               {role === "admin" && (
-                <Dropdown icon={<FiMoreHorizontal size={25}/>} position="absolute" top="10px" right="10px">
-                    {urlData.status === "active" ? (
-                      <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
-                          const response: any = await editUrl({ id, action: "pause" })
-                          if(response?.status === 200) {
-                            toast({
-                              title: "Link has been disabled",
-                              isClosable: true,
-                            })
-                          } else if (response) {
-                            toast({
-                              title: response.data,
-                              status: "error",
-                              isClosable: true
-                            })
-                          }
-                        }}
-                      >
-                        Disable Link
-                      </Button> 
-                    ) : (
-                      <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
-                          const response: any = await editUrl({ id, action: "unpause" })
-                          if(response?.status === 200) {
-                            toast({
-                              title: "Link has been enabled",
-                              isClosable: true,
-                            })
-                          } else if (response) {
+                <Dropdown
+                  icon={<FiMoreHorizontal size={25} />}
+                  position="absolute"
+                  top="10px"
+                  right="10px"
+                >
+                  {urlData.status === "active" ? (
+                    <Button
+                      _hover={{}}
+                      _active={{}}
+                      bg="none"
+                      w="max-content"
+                      h="max-content"
+                      _focus={{}}
+                      p={0}
+                      fontSize={12}
+                      onClick={async () => {
+                        const response: any = await editUrl({
+                          id,
+                          action: "pause",
+                        });
+                        if (response?.status === 200) {
                           toast({
-                            title: response?.data,
-                            status: "error",
-                            isClosable: true
-                          })
-                        }
-                        }}
-                      >
-                        Enable Link
-                      </Button> 
-                    )}
-                    <Button _hover={{}} _active={{}} bg="none" _focus={{}} p={0} fontSize={12}  h="max-content" w="max-content" onClick={async () => {
-                        const response: any = await editUrl({ id, action: "remove" });
-                        if(response?.status === 200) {
-                          toast({
-                            title: "Link has been removed",
+                            title: "Link has been disabled",
                             isClosable: true,
-                          })
-                          history.push("/")
+                          });
+                        } else if (response) {
+                          toast({
+                            title: response.data,
+                            status: "error",
+                            isClosable: true,
+                          });
+                        }
+                      }}
+                    >
+                      Disable Link
+                    </Button>
+                  ) : (
+                    <Button
+                      _hover={{}}
+                      _active={{}}
+                      bg="none"
+                      w="max-content"
+                      h="max-content"
+                      _focus={{}}
+                      p={0}
+                      fontSize={12}
+                      onClick={async () => {
+                        const response: any = await editUrl({
+                          id,
+                          action: "unpause",
+                        });
+                        if (response?.status === 200) {
+                          toast({
+                            title: "Link has been enabled",
+                            isClosable: true,
+                          });
                         } else if (response) {
                           toast({
                             title: response?.data,
                             status: "error",
-                            isClosable: true
-                          })
+                            isClosable: true,
+                          });
                         }
                       }}
                     >
-                      Remove Link
-                    </Button> 
+                      Enable Link
+                    </Button>
+                  )}
+                  <Button
+                    _hover={{}}
+                    _active={{}}
+                    bg="none"
+                    _focus={{}}
+                    p={0}
+                    fontSize={12}
+                    h="max-content"
+                    w="max-content"
+                    onClick={async () => {
+                      const response: any = await editUrl({
+                        id,
+                        action: "remove",
+                      });
+                      if (response?.status === 200) {
+                        toast({
+                          title: "Link has been removed",
+                          isClosable: true,
+                        });
+                        history.push("/");
+                      } else if (response) {
+                        toast({
+                          title: response?.data,
+                          status: "error",
+                          isClosable: true,
+                        });
+                      }
+                    }}
+                  >
+                    Remove Link
+                  </Button>
                 </Dropdown>
               )}
             </Box>
@@ -212,30 +262,53 @@ export default function StatisticsPage({ match }: { match: any }) {
                 />
               </Grid>
             </>
-          ) : urlData.visitors.length === 0 ? (
-            <Text textAlign="center" mt={50} fontSize={32} color="white">
-              No one visited this link yet
-            </Text>
-          ) : (
-            <Flex justifyContent="center" alignItems="center" direction="column" gridGap={5} bg="white" borderRadius={9} mt="15px" py={10}>
+          ) : urlData.status === "pause" ? (
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              direction="column"
+              gridGap={5}
+              bg="white"
+              borderRadius={9}
+              mt="15px"
+              py={10}
+            >
               <Text textAlign="center" fontSize={32}>
                 This URL is disabled
               </Text>
-              <SecondaryButton bg="white" label="Enable" onClick={async () => {
-                const response = await editUrl({ id, action: "unpause" })
-                if(response.statusText === "OK") {
-                  toast({
-                    title: "Link has been enabled",
-                    isClosable: true,
-                  })
-                } 
-              }}/>
+              <SecondaryButton
+                bg="white"
+                label="Enable"
+                onClick={async () => {
+                  const response = await editUrl({ id, action: "unpause" });
+                  if (response.statusText === "OK") {
+                    toast({
+                      title: "Link has been enabled",
+                      isClosable: true,
+                    });
+                  }
+                }}
+              />
             </Flex>
+          ) : (
+            <Text textAlign="center" mt={50} fontSize={32} color="white">
+              No one visited this link yet
+            </Text>
           )}
         </>
       ) : urlData && urlData.status === "remove" ? (
-        <Text fontSize={32} textAlign="center" color="white" fontWeight="bold" mt="10%">This link has been removed by owner</Text>
-      ) : (<></>)}
+        <Text
+          fontSize={32}
+          textAlign="center"
+          color="white"
+          fontWeight="bold"
+          mt="10%"
+        >
+          This link has been removed by owner
+        </Text>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 }
