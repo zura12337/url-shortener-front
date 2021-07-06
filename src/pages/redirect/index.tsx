@@ -1,19 +1,34 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { getUrlById } from "../../api";
 import { useHistory } from "react-router-dom";
+import {Text} from "@chakra-ui/react";
 
 export function RedirectPage({ match }: { match: any }): ReactElement | null {
   const id = match.params.id;
   const history = useHistory();
-  const { data: link, error } = getUrlById(id);
+  const [link, setLink] = useState<string>();
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
-    if (link) {
-      window.location.href = link;
-    } else if (error) {
-      history.push("/404");
-    }
-  }, [link]);
+    fetchUrl();
+  }, []);
 
-  return <></>;
+  useEffect(() => {
+    if(link) {
+      window.location.href = link;
+    }
+  }, [link])
+  
+  const fetchUrl = async () => {
+    const response = await getUrlById(id);
+    if(response.status === 200) {
+      setLink(response.data);
+    } else {
+      setError(response.data);
+    }
+  }
+
+  return <><Text color="white" textAlign="center" mt="20%" fontSize={38}>
+    {error && error}
+  </Text></>;
 }
