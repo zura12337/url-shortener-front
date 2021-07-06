@@ -92,7 +92,7 @@ export default function StatisticsPage({ match }: { match: any }) {
                 px={2}
                 py={1}
                 top="10px"
-                right="60px"
+                right={role === "admin" ? "60px" : "10px"}
                 borderRadius={5}
                 fontSize={14}
                 height="31px"
