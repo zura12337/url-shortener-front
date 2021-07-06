@@ -2,7 +2,7 @@ import React, { ReactElement, useState, useRef } from "react"
 import {Button, Box, Flex} from "@chakra-ui/react"
 import useOutsideClick from '../utils/useOutsideClick';
 
-export function Dropdown({ children, ...rest }: { children: any, [x:string]: any }): ReactElement | null {
+export function Dropdown({ label, icon, children, ...rest }: { label?: string, icon?:any, children: any, [x:string]: any }): ReactElement | null {
   const [expanded, setExpanded] = useState<boolean>(false)
 
   const ref: any = useRef();
@@ -28,7 +28,8 @@ export function Dropdown({ children, ...rest }: { children: any, [x:string]: any
         fontSize={13}
         ref={ref}
       >
-        More
+        {icon && icon}
+        {label && label}
       </Button>
       {expanded && (
         <Flex 
