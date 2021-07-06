@@ -1,6 +1,6 @@
 import { Link, Box, Text, Flex, Grid, Divider, Image, Button, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { getUrlData, editUrl } from "../../api";
+import { getUrlData, editUrl, getUserRole } from "../../api";
 import { UrlMetadataType, UrlType } from "../../types";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
@@ -8,7 +8,7 @@ import Loading from "../../components/Loading";
 import Chart from "../../components/Chart";
 import ImagePlaceholder from '../../assets/image_placeholder.jpg';
 import {Dropdown} from "../../components/Dropdown";
-import PrimaryButton from "../../components/PrimaryButton";
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 export default function StatisticsPage({ match }: { match: any }) {
   const id = match.params.id;
@@ -18,7 +18,7 @@ export default function StatisticsPage({ match }: { match: any }) {
   const [urlMetadata, setUrlMetadata] = useState<UrlMetadataType>();
   const [expanded, setExpanded] = useState<boolean>(false);
   const toast = useToast();
-
+  const { role } = getUserRole(id);
 
   useEffect(() => {
     if (data) {
@@ -92,54 +92,74 @@ export default function StatisticsPage({ match }: { match: any }) {
                 px={2}
                 py={1}
                 top="10px"
-                right="10px"
+                right="60px"
                 borderRadius={5}
                 fontSize={14}
                 height="31px"
               >
                 {urlData.date}
               </Box>
-              <Dropdown position="absolute" top="10px" right="110px">
-                  {urlData.status === "active" ? (
-                    <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
-                        const response = await editUrl({ id, action: "pause" })
-                        if(response.statusText === "OK") {
+              {role === "admin" && (
+                <Dropdown icon={<FiMoreHorizontal size={25}/>} position="absolute" top="10px" right="10px">
+                    {urlData.status === "active" ? (
+                      <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
+                          const response: any = await editUrl({ id, action: "pause" })
+                          if(response?.status === 200) {
+                            toast({
+                              title: "Link has been paused",
+                              isClosable: true,
+                            })
+                          } else if (response) {
+                            toast({
+                              title: response.data,
+                              status: "error",
+                              isClosable: true
+                            })
+                          }
+                        }}
+                      >
+                        Pause Link
+                      </Button> 
+                    ) : (
+                      <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
+                          const response: any = await editUrl({ id, action: "unpause" })
+                          if(response?.status === 200) {
+                            toast({
+                              title: "Link has been unpaused",
+                              isClosable: true,
+                            })
+                          } else if (response) {
                           toast({
-                            title: "Link has been paused",
+                            title: response?.data,
+                            status: "error",
+                            isClosable: true
+                          })
+                        }
+                        }}
+                      >
+                        Unpause Link
+                      </Button> 
+                    )}
+                    <Button _hover={{}} _active={{}} bg="none" _focus={{}} p={0} fontSize={12}  h="max-content" w="max-content" onClick={async () => {
+                        const response: any = await editUrl({ id, action: "remove" });
+                        if(response?.status === 200) {
+                          toast({
+                            title: "Link has been removed",
                             isClosable: true,
                           })
-                        } 
-                      }}
-                    >
-                      Pause Link
-                    </Button> 
-                  ) : (
-                    <Button _hover={{}} _active={{}} bg="none" w="max-content" h="max-content" _focus={{}} p={0} fontSize={12} onClick={async () => {
-                        const response = await editUrl({ id, action: "unpause" })
-                        if(response.statusText === "OK") {
+                        } else if (response) {
                           toast({
-                            title: "Link has been unpaused",
-                            isClosable: true,
+                            title: response?.data,
+                            status: "error",
+                            isClosable: true
                           })
-                        } 
+                        }
                       }}
                     >
-                      Unpause Link
+                      Remove Link
                     </Button> 
-                  )}
-                  <Button _hover={{}} _active={{}} bg="none" _focus={{}} p={0} fontSize={12}  h="max-content" w="max-content" onClick={async () => {
-                      const response = await editUrl({ id, action: "remove" });
-                      if(response.statusText === "OK") {
-                        toast({
-                          title: "Link has been removed",
-                          isClosable: true,
-                        })
-                      }
-                    }}
-                  >
-                    Remove Link
-                  </Button> 
-              </Dropdown>
+                </Dropdown>
+              )}
             </Box>
           </Flex>
           {urlData.visitors.length > 0 && urlData.status !== "pause" ? (

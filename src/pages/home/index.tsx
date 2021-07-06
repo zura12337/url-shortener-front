@@ -54,7 +54,7 @@ export default function HomePage() {
             const response = await shortenUrl(url);
             if (response.status === 200) {
               let newUrls;
-              if (myUrls.find(item => item.originalUrl === response.data.originalUrl)) {
+              if (myUrls && myUrls.find(item => item.originalUrl === response.data.originalUrl)) {
                 newUrls = myUrls.filter((url: UrlType) => url.originalUrl !== response.data.originalUrl);
                 newUrls = [response.data, ...newUrls];
               } else {
