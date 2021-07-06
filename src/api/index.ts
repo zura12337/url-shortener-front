@@ -46,7 +46,9 @@ export function getMyUrls() {
 }
 
 export function getUrlData(id: string) {
-  const { data, error } = useSWR(`${apiUrl}/statistics/${id}`, fetcher);
+  const { data, error } = useSWR(`${apiUrl}/statistics/${id}`, fetcher, {
+    refreshInterval: 2000,
+  });
 
   return {
     data,
