@@ -7,6 +7,7 @@ export interface UrlType {
   uniqueVisitors: [{ date: string; ip: string; browser: string; os: string }];
   generatedBy: [string];
   date: string;
+  status: string;
 }
 
 export interface UrlMetadataType {
