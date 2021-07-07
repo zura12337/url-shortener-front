@@ -56,6 +56,8 @@ export async function editUrl(data: any) {
 export function getMyUrls() {
   const { data, error } = useSWR(`${apiUrl}/urls/me`, fetcher);
 
+  console.log(process.env.REACT_APP_API_URL);
+
   return {
     data,
     isLoading: !data && !error,
