@@ -27,5 +27,5 @@
 
 ### Visited Links Page
 
-###### On visited links page website displays all URL that you clicked, including removed and disabled ones. You can filter removed URLs and show only active and paused URLs.  
+##### On visited links page website displays all URL that you clicked, including removed and disabled ones. You can filter removed URLs and show only active and paused URLs.  
 
