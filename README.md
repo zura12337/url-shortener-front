@@ -1,5 +1,6 @@
 # URL Shortener front
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/693ae26f-1914-4873-ab71-f34b84cfdb78/deploy-status)](https://app.netlify.com/sites/shorturlz/deploys)
 
 ##### Link shortener created with MERN Stack
 &nbsp;
