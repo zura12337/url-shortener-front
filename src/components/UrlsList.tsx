@@ -52,7 +52,7 @@ export default function UrlsList({
           )
           .map((url: UrlType, i: number) => (
             <Grid
-              gridTemplateColumns="7fr 2.7fr 1fr 1.4fr"
+              gridTemplateColumns="7fr 3.5fr 1fr 1.4fr"
               gridGap={5}
               alignItems="center"
               my={4}

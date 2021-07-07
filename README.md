@@ -5,6 +5,7 @@
 &nbsp;
 #### Project setup 🔧
 - npm install / yarn install
+- Create `.env` and set `REACT_APP_API_URL` variable.
 
 ##### Dev 🎬
 - npm start / yarn start
