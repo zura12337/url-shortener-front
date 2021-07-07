@@ -18,10 +18,12 @@ export default function UrlsList({
   urls,
   loading,
   filterOption = false,
+  errorMessage = "You have not shortened URL yet.",
 }: {
   urls: UrlType[];
   loading?: boolean;
   filterOption?: boolean;
+  errorMessage?: string;
 }) {
   const [copied, setCopied] = useState<number>();
   const [filterRemoved, setFilterRemoved] = useState<boolean>(false);
@@ -110,7 +112,7 @@ export default function UrlsList({
         </>
       ) : (
         <Text fontSize={22} textAlign="center" fontWeight="bold" my={7}>
-          You have not shortened URL yet.
+          {errorMessage}
         </Text>
       )}
     </Box>
