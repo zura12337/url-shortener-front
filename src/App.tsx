@@ -10,6 +10,7 @@ import { RedirectPage } from "./pages/redirect";
 import SecondaryButton from "./components/SecondaryButton";
 import NavBar from "./components/NavBar";
 import VisitedUrlsPage from "./pages/visited";
+import {NotFoundPage} from "./pages/not-found";
 
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ export const App = () => (
       <Switch>
         <Route path="/visited" component={VisitedUrlsPage} />
         <Route path="/statistics/:id" component={StatisticsPage} />
+        <Route path="/404" component={NotFoundPage} />
         <Route path="/:id" component={RedirectPage} />
         <Route path="/" component={HomePage} />
       </Switch>
