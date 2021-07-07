@@ -13,7 +13,6 @@ import { UrlType } from "../types";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "./SecondaryButton";
 import { UrlLoading } from "./UrlLoading";
-
 export default function UrlsList({
   urls,
   loading,
