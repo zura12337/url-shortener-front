@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <Flex
       w="100%"
-      h="100vh"
+      h="70vh"
       alignItems="center"
       flexDirection="column"
       gridGap={5}
