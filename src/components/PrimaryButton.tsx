@@ -30,7 +30,7 @@ export default function PrimaryButton({
       disabled={loading}
       {...rest}
     >
-      {loading && <ClipLoader size={18} color="white"/>}
+      {loading && <ClipLoader size={18} color="white" />}
       {label}
     </Button>
   );

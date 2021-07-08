@@ -73,8 +73,9 @@ export default function HomePage() {
           }}
           loading={newUrlLoading}
           position="absolute"
-          fontSize={["12px", "16px","18px"]}
-          width={["15%","20%", "20%"]}
+          fontSize={["13px", "16px","18px"]}
+          width={newUrlLoading ? "25%" : "20%"}
+          height="83%"
           top="5px"
           right="5px"
         />

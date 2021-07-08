@@ -24,18 +24,18 @@ export default function Chart({
   type?: string;
   objKey: string;
 }) {
-  const [chartWidth, setChartWidth] = useState<number>(0);
+  const [chartDimensions, setChartDimensions] = useState<{ x: number, y: number }>({ x: 0, y: 0});
 
   const ref: any = useRef(null);
 
   const updateDimensions = () => {
-    if (ref?.current) setChartWidth(ref?.current?.offsetWidth - 50);
+    if (ref?.current) setChartDimensions({ x: ref?.current?.offsetWidth - 50, y: ref?.current?.offsetHeight });
   };
 
   useEffect(() => {
     window.addEventListener("resize", updateDimensions);
     if (ref.current) {
-      setChartWidth(ref?.current?.offsetWidth - 50);
+      setChartDimensions({ x: ref?.current?.offsetWidth - 50, y: ref?.current?.offsetHeight - 20 });
     }
     return () => {
       window.removeEventListener("resize", updateDimensions);
@@ -74,8 +74,8 @@ export default function Chart({
       borderRadius="20px"
       boxShadow="5px 0 10px rgba(0,0,0,.3)"
       my="15px"
-      py={5}
-      pr={10}
+      py="10px"
+      pr="50px"
       ref={ref}
     >
       <Text mb={5} ml={10} color="gray.700">
@@ -83,8 +83,8 @@ export default function Chart({
       </Text>
       {type === "line" ? (
         <LineChart
-          width={chartWidth}
-          height={chartWidth - 300}
+          width={chartDimensions.x}
+          height={chartDimensions.x}
           data={processData(data, objKey)}
         >
           <Line
@@ -105,8 +105,8 @@ export default function Chart({
       ) : (
         <PieChart
           margin={{ left: 50 }}
-          width={chartWidth}
-          height={chartWidth - 160}
+          width={chartDimensions.x}
+          height={chartDimensions.x}
         >
           <Pie
             data={processData(data, objKey)}
@@ -114,7 +114,7 @@ export default function Chart({
             nameKey={objKey}
             cx="50%"
             cy="50%"
-            outerRadius={chartWidth / 5}
+            outerRadius={chartDimensions.x / 3}
           >
             {processData(data, objKey).map((entry: any, index) => (
               <Cell key={`cell-${index}`} fill={colors[index]} />
