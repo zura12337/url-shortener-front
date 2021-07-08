@@ -42,7 +42,7 @@ export default function StatisticsPage({ match }: { match: any }) {
         onClick={() => history.push("/")}
         position="relative"
         bg="white"
-        px={10}
+        px={[2, 3, 5, 10]}
         py={5}
         _focus={{}}
         _hover={{}}
@@ -145,7 +145,7 @@ export default function StatisticsPage({ match }: { match: any }) {
               />
             </Flex>
           ) : (
-            <Text textAlign="center" mt={50} fontSize={32} color="white">
+            <Text textAlign="center" mt={50} fontSize={[22, 32]} color="white">
               No one visited this link yet
             </Text>
           )}

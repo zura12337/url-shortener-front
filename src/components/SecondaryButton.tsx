@@ -15,6 +15,7 @@ export default function SecondaryButton({
       border="3px solid #364D66"
       bg="none"
       color="#364D66"
+      fontSize={[12, 16]}
       _hover={{ bg: "#364D66", color: "white" }}
       _active={{}}
       onClick={() => onClick()}

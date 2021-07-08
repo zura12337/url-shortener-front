@@ -17,7 +17,7 @@ export default function NavBar() {
       alignItems="center"
     >
       <Link to="/">
-        <Text fontFamily="heading" color="white" fontSize={48} lineHeight=".5" >
+        <Text fontFamily="heading" color="white" fontSize={[35, 48]} lineHeight=".5" >
           Link Shortener
         </Text>
       </Link>
