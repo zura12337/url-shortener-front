@@ -33,7 +33,7 @@ export default function HomePage() {
       >
         Link Shortener
       </Text>
-      <Box position="relative" w="50%">
+      <Box position="relative" w={["75%", "70%", "60%", "50%"]}>
         <Input
           name="url"
           bg="white"
@@ -73,6 +73,8 @@ export default function HomePage() {
           }}
           loading={newUrlLoading}
           position="absolute"
+          fontSize={["12px", "16px","18px"]}
+          width={["15%","20%", "20%"]}
           top="5px"
           right="5px"
         />
