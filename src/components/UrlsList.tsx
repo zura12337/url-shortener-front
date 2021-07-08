@@ -7,6 +7,7 @@ import {
   Link,
   Text,
   useToast,
+  Divider,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { UrlType } from "../types";
@@ -51,54 +52,57 @@ export default function UrlsList({
             filterRemoved ? url.status !== "remove" : url.status !== undefined
           )
           .map((url: UrlType, i: number) => (
-            <Grid
-              gridTemplateColumns="7fr 3.5fr 1fr 1.4fr"
-              gridGap={5}
-              alignItems="center"
-              my={4}
-              key={url._id}
-            >
-              {url.status === "remove" && !filterRemoved ? (
-                <Text my="7px" fontWeight="bold">
-                  [Removed]
-                </Text>
-              ) : (
-                <>
-                  <Text noOfLines={1} textOverflow="ellipsis">
-                    <strong>{url.status === "pause" && "[Disabled]"}</strong>{" "}
-                    {url.originalUrl}
+            <>
+              <Grid
+                gridTemplateColumns={["1fr", "1fr", "1fr", "1fr 1fr", "7fr 3.5fr 1fr 1.4fr"]}
+                gridGap={5}
+                alignItems="center"
+                my={4}
+                key={url._id}
+              >
+                {url.status === "remove" && !filterRemoved ? (
+                  <Text my="7px" fontWeight="bold">
+                    [Removed]
                   </Text>
-                  <Link
-                    color="blue.500"
-                    href={url.shortUrl}
-                    noOfLines={1}
-                    _focus={{}}
-                  >
-                    {url.shortUrl}
-                  </Link>
-                  <SecondaryButton
-                    label={copied === i ? "Copied!" : "Copy"}
-                    bg={copied === i ? "#364D66" : "none"}
-                    color={copied === i ? "white" : "#364D66"}
-                    onClick={() => {
-                      navigator.clipboard.writeText(url.shortUrl);
-                      toast({
-                        title: "Link copied succesfully",
-                        duration: 2000,
-                        isClosable: true,
-                      });
-                      setCopied(i);
-                    }}
-                  />
-                  <SecondaryButton
-                    label="Statistics"
-                    onClick={() => {
-                      history.push(`/statistics/${url.id}`);
-                    }}
-                  />
-                </>
-              )}
-            </Grid>
+                ) : (
+                  <>
+                    <Text noOfLines={1} textOverflow="ellipsis">
+                      <strong>{url.status === "pause" && "[Disabled]"}</strong>{" "}
+                      {url.originalUrl}
+                    </Text>
+                    <Link
+                      color="blue.500"
+                      href={url.shortUrl}
+                      noOfLines={1}
+                      _focus={{}}
+                    >
+                      {url.shortUrl}
+                    </Link>
+                    <SecondaryButton
+                      label={copied === i ? "Copied!" : "Copy"}
+                      bg={copied === i ? "#364D66" : "none"}
+                      color={copied === i ? "white" : "#364D66"}
+                      onClick={() => {
+                        navigator.clipboard.writeText(url.shortUrl);
+                        toast({
+                          title: "Link copied succesfully",
+                          duration: 2000,
+                          isClosable: true,
+                        });
+                        setCopied(i);
+                      }}
+                    />
+                    <SecondaryButton
+                      label="Statistics"
+                      onClick={() => {
+                        history.push(`/statistics/${url.id}`);
+                      }}
+                    />
+                  </>
+                )}
+              </Grid>
+              <Divider />
+            </>
           ))
       ) : loading ? (
         <>
