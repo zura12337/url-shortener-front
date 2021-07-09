@@ -1,23 +1,17 @@
 import {
-  Link,
   Box,
   Text,
   Flex,
   Grid,
-  Divider,
-  Image,
-  Button,
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { getUrlData, editUrl, getUserRole } from "../../api";
+import { getUrlData, editUrl } from "../../api";
 import { UrlMetadataType, UrlType } from "../../types";
 import { useHistory } from "react-router-dom";
 import SecondaryButton from "../../components/SecondaryButton";
 import Loading from "../../components/Loading";
 import Chart from "../../components/Chart";
-import { Dropdown } from "../../components/Dropdown";
-import { FiMoreHorizontal } from "react-icons/fi";
 import {UrlInfo} from "../../components/UrlInfo";
 
 export default function StatisticsPage({ match }: { match: any }) {

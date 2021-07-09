@@ -8,13 +8,13 @@ import PrimaryButton from "../../components/PrimaryButton";
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
   const { data: urls, isLoading: urlsLoading } = getMyUrls();
-  const [myUrls, setMyUrls] = useState<UrlType[]>([])
+  const [myUrls, setMyUrls] = useState<UrlType[]>([]);
   const [newUrlLoading, setNewUrlLoading] = useState<boolean>(false);
   const toast = useToast();
 
   useEffect(() => {
     setMyUrls(urls);
-  }, [urls])
+  }, [urls]);
 
   return (
     <Flex
@@ -54,8 +54,16 @@ export default function HomePage() {
             const response = await shortenUrl(url);
             if (response.status === 200) {
               let newUrls;
-              if (myUrls && myUrls.find(item => item.originalUrl === response.data.originalUrl)) {
-                newUrls = myUrls.filter((url: UrlType) => url.originalUrl !== response.data.originalUrl);
+              if (
+                myUrls &&
+                myUrls.find(
+                  (item) => item.originalUrl === response.data.originalUrl
+                )
+              ) {
+                newUrls = myUrls.filter(
+                  (url: UrlType) =>
+                    url.originalUrl !== response.data.originalUrl
+                );
                 newUrls = [response.data, ...newUrls];
               } else {
                 newUrls = [response.data, ...myUrls];
@@ -66,14 +74,14 @@ export default function HomePage() {
                 title: response.data,
                 status: "error",
                 isClosable: true,
-              })
+              });
             }
             setUrl("");
             setNewUrlLoading(false);
           }}
           loading={newUrlLoading}
           position="absolute"
-          fontSize={["13px", "16px","18px"]}
+          fontSize={["13px", "16px", "18px"]}
           width={newUrlLoading ? "25%" : "20%"}
           height="83%"
           top="5px"

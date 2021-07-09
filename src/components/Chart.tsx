@@ -84,7 +84,7 @@ export default function Chart({
       {type === "line" ? (
         <LineChart
           width={chartDimensions.x}
-          height={chartDimensions.x}
+          height={window.innerWidth < 720 ? chartDimensions.x : chartDimensions.x - 250}
           data={processData(data, objKey)}
         >
           <Line

@@ -20,3 +20,4 @@ export interface UserType {
   ip: string;
   visitedLinks: [string];
 }
+
